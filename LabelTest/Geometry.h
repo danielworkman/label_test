@@ -153,10 +153,10 @@ private:
 class Path
 {
 public:
-	struct RadiusInfo
+	struct ArcInfo
 	{
-		RadiusInfo(const Vector2& point) : point(point), radius(0.0), clockwise(false), large(false) {};
-		RadiusInfo(const Vector2& point, const double radius, const bool clockwise = true, const bool large = false)
+		ArcInfo(const Vector2& point) : point(point), radius(0.0), clockwise(false), large(false) {};
+		ArcInfo(const Vector2& point, const double radius, const bool clockwise = true, const bool large = false)
 			: point(point),
 			  radius(radius),
 			  clockwise(clockwise),
@@ -172,12 +172,12 @@ public:
 	using const_iterator = EdgeList::const_iterator;
 
 	using VectorList = std::vector<Vector2>;
-	using VectorRadiusList = std::vector<RadiusInfo>;
+	using VectorArcList = std::vector<ArcInfo>;
 
 	Path() = default;
 	Path(const EdgeList& edges) : m_edges(edges) {};
 	Path(const VectorList& vecList) { AddEdges(vecList); };
-	Path(const VectorRadiusList& vecList) { AddEdges(vecList); };
+	Path(const VectorArcList& vecList) { AddEdges(vecList); };
 
 	const Edge& front() const { return m_edges.front(); }
 	const Edge& back() const { return m_edges.back(); }
@@ -193,7 +193,7 @@ public:
 	bool AddEdge(const Vector2& vec);
 
 	bool AddEdges(const VectorList& vecList);
-	bool AddEdges(const VectorRadiusList& vecList);
+	bool AddEdges(const VectorArcList& vecList);
 
 	Path Translate(const Vector2& translation) const;
 	Path Rotate(const Vector2& origin, const double rotation) const;

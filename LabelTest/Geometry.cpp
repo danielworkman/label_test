@@ -83,20 +83,9 @@ Vector2 Edge::MidPoint() const
 		return GetP1() + ((GetP2() - GetP1()) * 0.5);
 	}
 
-	// http://mathforum.org/library/drmath/view/54365.html
-
 	const Vector2& centre = GetCircleCentre();
 	double sweep = GetSweep();
 	double angle = 0.5 * sweep;
-
-	//const Vector2 p1Normalised = (GetP1() - centre).Normalise();
-	//const Vector2 p2Normalised = (GetP2() - centre).Normalise();
-
-	//const double angleRadians = MathsUtil::DegreesToRadians(m_angle);
-	//const double sinbeta = sin(angle);
-	//const double cosbeta = cos(angle);
-
-	//double t = atan2(p1Normalised.y, p1Normalised.x);
 
 	// clockwise winding wants negative sweep
 	if (GetClockwise())
@@ -104,29 +93,7 @@ Vector2 Edge::MidPoint() const
 		angle *= -1.0;
 	}
 
-	const double sweepDegrees = Utils::RadToDeg(angle);
-
 	return Vector2(centre.x + GetRadius() * cos(angle), centre.y + GetRadius() * sin(angle));
-
-
-	Vector2 point;
-	//const double sin_t = sin(t);
-	//const double cos_t = cos(t);
-	//point.x = centre.x + (GetRadius() * cos_t * cosbeta - GetRadius() * sin_t * sinbeta);
-	//point.y = centre.y + (GetRadius() * sin_t * cosbeta + GetRadius() * cos_t * sinbeta);
-	//return point;
-
-	//x = cx + r * cos(a)
-	//y = cy + r * sin(a)
-// 
-// 	if (GetClockwise() && !GetLarge())
-// 	{
-// 		return Vector2(centre.x - GetRadius()*cos(t), centre.y - GetRadius()*sin(t));
-// 	}
-// 
-// 	point = Vector2( centre.x + GetRadius()*cos(t), centre.y + GetRadius()*sin(t));
-// 
-// 	return point;
 }
 //-----------------------------------------------------------------------------
 
@@ -151,7 +118,9 @@ double Edge::GetSweep() const
 	double extent = atan2(v2Dash.y, v2Dash.x) - atan2(v1Dash.y, v1Dash.x);
 
 	if (extent < -Utils::DOUBLE_EPSILON)
+	{
 		extent += 2 * Utils::M_PI;
+	}
 
 	return extent;
 }
@@ -164,14 +133,18 @@ Vector2 Edge::PointOnEdge(const double offset) const
 
 	if (IsArc())
 	{
-		double sweep = GetSweep();
+		const double sweep = GetSweep();
+
 		double t = sweep * offset;
-		if (GetClockwise()) { t = -t; }
+		if (GetClockwise())
+		{
+			t = -t;
+		}
+
 		return GetP1().Rotate(GetCircleCentre(), t);
 	}
 
-	Vector2 v = GetTangent(GetP1()) * (offset * Length());
-	return GetP1() + v;
+	return GetP1() + GetTangent(GetP1()) * (offset * Length());
 }
 //-----------------------------------------------------------------------------
 
@@ -212,7 +185,6 @@ bool Path::AddEdge(const Vector2& vec)
 		return false;
 
 	AddEdge(Edge(back().GetP2(), vec));
-
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -234,12 +206,12 @@ bool Path::AddEdges(const VectorList& vecList)
 }
 //-----------------------------------------------------------------------------
 
-bool Path::AddEdges(const VectorRadiusList& vecList)
+bool Path::AddEdges(const VectorArcList& vecList)
 {
 	if (vecList.size() < 2)
 		return false;
 
- 	RadiusInfo p1 = vecList.front();
+ 	ArcInfo p1 = vecList.front();
  
  	for (auto itr = vecList.begin() + 1; itr != vecList.end(); ++itr)
  	{

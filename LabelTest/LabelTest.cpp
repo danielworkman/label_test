@@ -37,26 +37,9 @@ Path::EdgeList CLabelTestApp::ArcsTest()
 }
 //-----------------------------------------------------------------------------
 
-Path::VectorRadiusList CLabelTestApp::PathExample1()
+Path::VectorArcList CLabelTestApp::PathExample()
 {
 	return {
-		{ Vector2(100, 300) },
-		{ Vector2(300, 300) },
-		{ Vector2(370, 370), 80, false, true },
-		{ Vector2(400, 540) },
-		{ Vector2(540, 540), 70 },
-		{ Vector2(570, 420) },
-		{ Vector2(660, 220), 450, false, true },
-		{ Vector2(690, 100), 500 },
-		{ Vector2(700, 90), 20, false, true },
-		{ Vector2(850, 70) },
-	};
-}
-//-----------------------------------------------------------------------------
-
-Path::VectorRadiusList CLabelTestApp::PathExample2()
-{
-	return{
 		{ Vector2(100, 300) },
 		{ Vector2(300, 300) },
 		{ Vector2(370, 370), 80, false, true },
@@ -75,7 +58,7 @@ BOOL CLabelTestApp::InitInstance()
 {
 	CWinApp::InitInstance();
 
-	Path path = Path(ArcsTest());
+	Path path(PathExample());
 
 	CLabelTestDlg dlg(path);
 	m_pMainWnd = &dlg;

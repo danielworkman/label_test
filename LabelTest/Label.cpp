@@ -6,7 +6,7 @@ void Label::CreateBoundingBox()
 	const double halfWidth = m_width / 2.0;
 	const double halfHeight = m_height / 2.0;
 
-	Path::VectorRadiusList points = {
+	Path::VectorList points = {
 		Vector2(-halfWidth, -halfHeight),
 		Vector2(halfWidth, -halfHeight),
 		Vector2(halfWidth, halfHeight),
@@ -18,7 +18,7 @@ void Label::CreateBoundingBox()
 }
 //-----------------------------------------------------------------------------
 
-std::vector<Path> Label::GetLetters(const Path& path, double percentage) const
+std::vector<Path> Label::GetLetters(const Path& path, const double percentage) const
 {
  	std::vector<Path> letters;
 
@@ -30,21 +30,35 @@ std::vector<Path> Label::GetLetters(const Path& path, double percentage) const
 	const double letterPercentage = percentageCovered / GetLetterCount();
 	const double letterOffset = letterPercentage / 2.0;
 
+	double adjustedPercentage = percentage;
+
 	// Force first label letter to start on the path
 	if (percentage - letterOffset <= 0.0)
 	{
-		percentage = letterOffset;
+		adjustedPercentage = letterOffset;
 	}
 
 	// Don't allow the label to run off the end of the path
 	if (percentage + percentageCovered - letterOffset > 1.0)
 	{
-		percentage = 1.0 - percentageCovered + letterOffset;
+		adjustedPercentage = 1.0 - percentageCovered + letterOffset;
+	}
+
+	// The entire label is longer than the path so force to beginning of path
+	if (percentageCovered > 1.0)
+	{
+		adjustedPercentage = 0.0 + letterOffset;
 	}
 
 	for (size_t i = 0; i < GetLetterCount(); ++i)
 	{
-		const double currentPercentage = percentage + (i * letterPercentage);
+		const double currentPercentage = adjustedPercentage + (i * letterPercentage);
+
+		// This letter is off the end of the path so exit early
+		if (currentPercentage + letterOffset > 1.0)
+		{
+			return letters;
+		}
 
 		Edge edge;
 		if (!path.GetEdge(currentPercentage, edge))

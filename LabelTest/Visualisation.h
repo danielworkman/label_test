@@ -21,7 +21,6 @@ public:
 
 	void DrawEdge(const Edge& edge);
 	void DrawPoint(const Vector2& point);
-	void DrawMidPoint(const Edge& edge);
 
 	void DrawText(const Vector2& point, const std::string& text);
 

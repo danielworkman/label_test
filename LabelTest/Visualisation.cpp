@@ -27,8 +27,6 @@ void Visualisation::DrawEdge(const Edge& edge)
 
 		m_dc->SetArcDirection(edge.GetClockwise() ? AD_CLOCKWISE : AD_COUNTERCLOCKWISE);
 		m_dc->Arc(rect, edge.GetP2().ToPoint(), edge.GetP1().ToPoint());
-
-		//m_dc->Rectangle(rect);
 	}
 	else
 	{
@@ -75,15 +73,6 @@ void Visualisation::DrawPoint(const Vector2& point)
 	m_dc->Rectangle(pointp.x - 3, pointp.y - 3, pointp.x + 3, pointp.y + 3);
 
 	m_dc->SelectObject(oldPen);
-}
-//-----------------------------------------------------------------------------
-
-void Visualisation::DrawMidPoint(const Edge& edge)
-{
-	if (!m_dc)
-		return;
-
-	DrawPoint(edge.MidPoint());
 }
 //-----------------------------------------------------------------------------
 

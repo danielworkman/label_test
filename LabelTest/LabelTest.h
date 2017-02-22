@@ -31,8 +31,7 @@ public:
 
 private:
 	Path::EdgeList ArcsTest();
-	Path::VectorRadiusList PathExample1();
-	Path::VectorRadiusList PathExample2();
+	Path::VectorArcList PathExample();
 };
 
 extern CLabelTestApp theApp;

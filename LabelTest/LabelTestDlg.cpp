@@ -20,9 +20,9 @@
 CLabelTestDlg::CLabelTestDlg(const Path& path, CWnd* pParent /*=NULL*/)
 	: m_path(path),
 	  m_sliderPos(0.0),
-	  m_boxCount(5),
-	  m_boxHeight(25),
-	  m_boxWidth(15),
+	  m_boxCount(8),
+	  m_boxHeight(22),
+	  m_boxWidth(12),
 	  m_spacing(2),
 	  CDialogEx(CLabelTestDlg::IDD, pParent)
 {
