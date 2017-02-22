@@ -9,6 +9,7 @@
 #endif
 
 #include "resource.h"		// main symbols
+#include "Geometry.h"
 
 
 // CLabelTestApp:
@@ -27,6 +28,13 @@ public:
 // Implementation
 
 	DECLARE_MESSAGE_MAP()
+
+private:
+	Path::EdgeList ArcsTest();
+	Path::VectorRadiusList PathTest();
+	Path::VectorRadiusList PathTest2();
+
+	Path CreateExamplePath();
 };
 
 extern CLabelTestApp theApp;
