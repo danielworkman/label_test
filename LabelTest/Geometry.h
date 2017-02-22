@@ -134,10 +134,10 @@ public:
 
 	Vector2 PointOnEdge(const double offset) const;
 
-	bool Equals(const Edge &other) const;
+	bool Equals(const Edge& other) const;
 	Vector2 MidPoint() const;
 
-	Edge Rotate(const Vector2 &origin, const double rotation) const;
+	Edge Rotate(const Vector2& origin, const double rotation) const;
 
 private:
 	Vector2 CalcCircleCentre() const;
@@ -174,7 +174,7 @@ public:
 	using VectorList = std::vector<Vector2>;
 	using VectorRadiusList = std::vector<RadiusInfo>;
 
-	Path() {};
+	Path() = default;
 	Path(const EdgeList& edges) : m_edges(edges) {};
 	Path(const VectorList& vecList) { AddEdges(vecList); };
 	Path(const VectorRadiusList& vecList) { AddEdges(vecList); };
@@ -195,8 +195,8 @@ public:
 	bool AddEdges(const VectorList& vecList);
 	bool AddEdges(const VectorRadiusList& vecList);
 
-	Path Translate(const Vector2 &translation) const;
-	Path Rotate(const Vector2 &origin, const double rotation) const;
+	Path Translate(const Vector2& translation) const;
+	Path Rotate(const Vector2& origin, const double rotation) const;
 
 	bool GetEdge(const double position, Edge& outEdge) const;
 	Vector2 PointOnPath(const double position) const;

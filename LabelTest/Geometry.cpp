@@ -175,7 +175,7 @@ Vector2 Edge::PointOnEdge(const double offset) const
 }
 //-----------------------------------------------------------------------------
 
-bool Edge::Equals(const Edge &other) const
+bool Edge::Equals(const Edge& other) const
 {
 	if (!GetP1().Equals(other.GetP1())) return false;
 	if (!GetP2().Equals(other.GetP2())) return false;
@@ -187,7 +187,7 @@ bool Edge::Equals(const Edge &other) const
 }
 //-----------------------------------------------------------------------------
 
-Edge Edge::Rotate(const Vector2 &origin, const double rotation) const
+Edge Edge::Rotate(const Vector2& origin, const double rotation) const
 {
 	return Edge(GetP1().Rotate(origin, rotation), GetP2().Rotate(origin, rotation));
 }
@@ -314,7 +314,7 @@ Vector2 Path::PointOnPath(const double position) const
 }
 //-----------------------------------------------------------------------------
 
-Path Path::Translate(const Vector2 &translation) const
+Path Path::Translate(const Vector2& translation) const
 {
 	Path path;
 	for (const_iterator edge = begin(); edge != end(); ++edge)
@@ -325,7 +325,7 @@ Path Path::Translate(const Vector2 &translation) const
 }
 //-----------------------------------------------------------------------------
 
-Path Path::Rotate(const Vector2 &origin, const double rotation) const
+Path Path::Rotate(const Vector2& origin, const double rotation) const
 {
 	if (Utils::DoubleCompare(rotation, 0.0))
 		return *this;

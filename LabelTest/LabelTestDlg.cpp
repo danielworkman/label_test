@@ -20,6 +20,10 @@
 CLabelTestDlg::CLabelTestDlg(const Path& path, CWnd* pParent /*=NULL*/)
 	: m_path(path),
 	  m_sliderPos(0.0),
+	  m_boxCount(5),
+	  m_boxHeight(25),
+	  m_boxWidth(15),
+	  m_spacing(2),
 	  CDialogEx(CLabelTestDlg::IDD, pParent)
 {
 }
@@ -48,22 +52,17 @@ BOOL CLabelTestDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	m_boxCount = 5;
-	m_boxHeight = 25;
-	m_boxWidth = 15;
-	m_spacing = 2;
-
 	GetDlgItem(IDC_BOXES_EDIT)->SetWindowText(std::to_wstring(m_boxCount).c_str());
 	GetDlgItem(IDC_BOX_HEIGHT_EDIT)->SetWindowText(std::to_wstring(m_boxHeight).c_str());
 	GetDlgItem(IDC_BOX_WIDTH_EDIT)->SetWindowText(std::to_wstring(m_boxWidth).c_str());
 	GetDlgItem(IDC_SPACING_EDIT)->SetWindowText(std::to_wstring(m_spacing).c_str());
 
+	m_brush = CreateSolidBrush(RGB(255, 255, 255));
+
 	CSliderCtrl* slider = (CSliderCtrl*)GetDlgItem(IDC_SLIDER);
 	slider->SetRangeMax(1000);
 
 	m_vis = Visualisation(this->GetDC());
-
-	m_brush = CreateSolidBrush(RGB(255, 255, 255));
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -84,12 +83,7 @@ void CLabelTestDlg::CreateLabel()
 	CPen* oldPen = m_vis.GetPen();
 
 	m_vis.SelectPen(&pen);
-
-	for (auto itr = letters.begin(); itr != letters.end(); ++itr)
-	{
-		m_vis.DrawPath(*itr);
-	}
-
+	m_vis.DrawPaths(letters);
 	m_vis.SelectPen(oldPen);
 }
 //-----------------------------------------------------------------------------
@@ -105,9 +99,14 @@ void CLabelTestDlg::DisplayPercentage()
 
 void CLabelTestDlg::OnPaint()
 {
+	PAINTSTRUCT ps;
+	BeginPaint(&ps);
+
 	DrawPath();
 	CreateLabel();
 	DisplayPercentage();
+
+	EndPaint(&ps);
 }
 //-----------------------------------------------------------------------------
 

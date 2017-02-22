@@ -1,10 +1,9 @@
 #pragma once
 
-class Utils
+namespace Utils
 {
-public:
-	static const double DOUBLE_EPSILON;
-	static const double M_PI;
+	static const double DOUBLE_EPSILON = 0.0001;
+	static const double M_PI = 3.14159265358;
 
 	static inline int Round(const double value) { return int(value + 0.5); };
 
@@ -25,4 +24,4 @@ public:
 	{
 		return radians * (180.0 / M_PI);
 	}
-}; // namespace Utils
+};

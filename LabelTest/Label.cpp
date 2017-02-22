@@ -22,34 +22,44 @@ std::vector<Path> Label::GetLetters(const Path& path, double percentage) const
 {
  	std::vector<Path> letters;
 
-	if (GetLength() <= 0)
+	if (GetLetterCount() == 0)
 		return letters;
 
-	const double totalMinWidth = (GetWidth() + GetSpacing()) * GetLength();
-	const double minPercentage = 1.0 - (path.Length() - totalMinWidth) / path.Length();
-	const double percentageSplit = minPercentage / GetLength();
+	const double totalLabelWidth = (GetWidth() + GetSpacing()) * GetLetterCount();
+	const double percentageCovered = 1.0 - (path.Length() - totalLabelWidth) / path.Length();
+	const double letterPercentage = percentageCovered / GetLetterCount();
+	const double letterOffset = letterPercentage / 2.0;
 
-	if (percentage + minPercentage - percentageSplit > 1.0)
+	// Force first label letter to start on the path
+	if (percentage - letterOffset <= 0.0)
 	{
-		percentage = 1.0 - minPercentage + percentageSplit;
+		percentage = letterOffset;
 	}
 
-	for (size_t i = 0; i < GetLength(); ++i)
+	// Don't allow the label to run off the end of the path
+	if (percentage + percentageCovered - letterOffset > 1.0)
 	{
-		const double letterPercentage = percentage + (i * percentageSplit);
+		percentage = 1.0 - percentageCovered + letterOffset;
+	}
+
+	for (size_t i = 0; i < GetLetterCount(); ++i)
+	{
+		const double currentPercentage = percentage + (i * letterPercentage);
 
 		Edge edge;
-		if (!path.GetEdge(letterPercentage, edge))
+		if (!path.GetEdge(currentPercentage, edge))
 		{
 			return letters;
 		}
 
-		const Vector2 point = path.PointOnPath(letterPercentage);
+		const Vector2 point = path.PointOnPath(currentPercentage);
 		const Vector2 tangent = edge.GetTangent(point);
 
 		const double angleBetween = Vector2(0.0, -1.0).GetAngle(tangent);
 
-		Path newBox = GetBoundingBox().Rotate(Vector2(), angleBetween - Utils::DegToRad(90.0));
+		// Rotate the letter box around it's centre
+		Path newBox = GetBoundingBox().Rotate(Vector2(0.0, 0.0), angleBetween - Utils::DegToRad(90.0));
+
 		letters.push_back(newBox.Translate(point));
 	}
 

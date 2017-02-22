@@ -6,8 +6,8 @@
 class Label
 {
 public:
-	Label(const size_t length, const int height, const int width, const int spacing)
-		: m_length(length),
+	Label(const size_t letters, const int height, const int width, const int spacing)
+		: m_letters(letters),
 		  m_height(height),
 		  m_width(width),
 		  m_spacing(spacing)
@@ -15,7 +15,7 @@ public:
 		CreateBoundingBox();
 	};
 
-	size_t GetLength() const { return m_length; }
+	size_t GetLetterCount() const { return m_letters; }
 	int GetHeight() const { return m_height; }
 	int GetWidth() const { return m_width; }
 	int GetSpacing() const { return m_spacing; }
@@ -28,7 +28,7 @@ public:
 private:
 	void CreateBoundingBox();
 
-	size_t m_length;
+	size_t m_letters;
 	int m_height;
 	int m_width;
 	int m_spacing;

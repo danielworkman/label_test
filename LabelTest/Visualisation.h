@@ -17,6 +17,8 @@ public:
 	CBrush* GetBrush() { return m_brush; }
 
 	void DrawPath(const Path& path);
+	void DrawPaths(const std::vector<Path>& path);
+
 	void DrawEdge(const Edge& edge);
 	void DrawPoint(const Vector2& point);
 	void DrawMidPoint(const Edge& edge);

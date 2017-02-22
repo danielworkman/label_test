@@ -50,6 +50,18 @@ void Visualisation::DrawPath(const Path& path)
 }
 //-----------------------------------------------------------------------------
 
+void Visualisation::DrawPaths(const std::vector<Path>& paths)
+{
+	if (!m_dc)
+		return;
+
+	for (auto itr = paths.begin(); itr != paths.end(); ++itr)
+	{
+		DrawPath(*itr);
+	}
+}
+//-----------------------------------------------------------------------------
+
 void Visualisation::DrawPoint(const Vector2& point)
 {
 	if (!m_dc)
