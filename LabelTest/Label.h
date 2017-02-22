@@ -28,6 +28,16 @@ public:
 private:
 	void CreateBoundingBox();
 
+	double GetAdjustedPercentage(
+		const double percentage,
+		const double percentageCovered) const;
+
+	std::vector<double> GetLetterCentres(
+		const Path& path,
+		const double adjustedPercentage,
+		const double halfLetterCoverage,
+		const double spacingCoverage) const;
+
 	size_t m_letters;
 	int m_height;
 	int m_width;
