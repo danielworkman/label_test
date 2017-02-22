@@ -98,9 +98,6 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="Label.h" />
     <ClInclude Include="LabelTest.h" />
@@ -126,7 +123,6 @@
     <ResourceCompile Include="LabelTest.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
     <None Include="res\LabelTest.rc2" />
   </ItemGroup>
   <ItemGroup>
